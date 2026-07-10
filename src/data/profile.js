@@ -2,6 +2,12 @@ export const profile = {
   name: 'Jhunier Hernandez Calderon',
   handle: 'riassd',
   role: 'Ingeniero de Sistemas · Maestría en Ciberseguridad (en curso)',
+  roles: [
+    'Ingeniero de Sistemas',
+    'Analista de Ciberseguridad Junior',
+    'Soporte TI & Infraestructura',
+    'Automatización & Scripting',
+  ],
   bio:
     'Orientado a la gestión de riesgos tecnológicos, soporte TI y fortalecimiento de la ' +
     'seguridad en plataformas digitales. Experiencia en manejo de incidencias, soporte a ' +
