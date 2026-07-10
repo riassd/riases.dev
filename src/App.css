@@ -1,0 +1,264 @@
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px max(24px, calc((100% - 960px) / 2));
+  border-bottom: 1px solid var(--border);
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  backdrop-filter: blur(8px);
+}
+
+.brand {
+  font-weight: 600;
+  font-size: 20px;
+  color: var(--text-h);
+  text-decoration: none;
+}
+
+.brand-dot {
+  color: var(--accent);
+}
+
+.nav {
+  display: flex;
+  gap: 24px;
+}
+
+.nav a {
+  text-decoration: none;
+  color: var(--text);
+  transition: color 0.2s;
+}
+
+.nav a:hover {
+  color: var(--text-h);
+}
+
+main {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.hero {
+  padding: 96px 0 64px;
+}
+
+.hero-eyebrow {
+  color: var(--accent);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-size: 14px;
+}
+
+.hero-name {
+  font-size: 48px;
+  letter-spacing: -1px;
+  margin: 12px 0 8px;
+}
+
+.hero-role {
+  font-size: 20px;
+  color: var(--text-h);
+  margin-bottom: 20px;
+}
+
+.hero-bio {
+  max-width: 60ch;
+  margin-bottom: 32px;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  padding: 10px 20px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 500;
+  border: 1px solid transparent;
+  transition: box-shadow 0.2s, border-color 0.2s;
+}
+
+.button-primary {
+  color: var(--accent);
+  background: var(--accent-bg);
+  border-color: var(--accent-border);
+}
+
+.button-primary:hover {
+  box-shadow: var(--shadow);
+}
+
+.button-ghost {
+  color: var(--text-h);
+  border-color: var(--border);
+}
+
+.button-ghost:hover {
+  border-color: var(--accent-border);
+}
+
+.section {
+  padding: 56px 0;
+  border-top: 1px solid var(--border);
+}
+
+.section-title {
+  font-size: 28px;
+  margin-bottom: 28px;
+}
+
+.card {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 28px;
+  background: var(--bg-subtle);
+  text-align: left;
+}
+
+.card-featured {
+  margin-bottom: 24px;
+}
+
+.card-eyebrow {
+  color: var(--accent);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 13px;
+  margin-bottom: 8px;
+}
+
+.card-title {
+  font-size: 22px;
+  margin-bottom: 8px;
+}
+
+.card-tagline {
+  color: var(--text-h);
+  margin-bottom: 12px;
+}
+
+.card-description {
+  margin-bottom: 16px;
+}
+
+.card-highlights {
+  display: grid;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.card-highlights li {
+  padding-left: 20px;
+  position: relative;
+}
+
+.card-highlights li::before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+}
+
+.tech-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.tech-list li {
+  font-size: 13px;
+  font-family: var(--mono);
+  padding: 4px 10px;
+  border-radius: 6px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  color: var(--text-h);
+}
+
+.card-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+}
+
+.card-placeholder {
+  border-style: dashed;
+  color: var(--text);
+}
+
+.card-placeholder .card-title,
+.card-placeholder .card-tagline {
+  color: var(--text);
+}
+
+.skills-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.skills-list li {
+  padding: 8px 16px;
+  border-radius: 999px;
+  background: var(--accent-bg);
+  color: var(--accent);
+  border: 1px solid var(--accent-border);
+  font-size: 14px;
+}
+
+.contact-text {
+  max-width: 55ch;
+  margin-bottom: 24px;
+}
+
+.contact-links {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.site-footer {
+  padding: 32px 24px 48px;
+  text-align: center;
+  color: var(--text);
+  font-size: 14px;
+}
+
+@media (max-width: 640px) {
+  .hero {
+    padding: 64px 0 40px;
+  }
+
+  .hero-name {
+    font-size: 36px;
+  }
+
+  .hero-actions,
+  .card-actions,
+  .contact-links {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .button {
+    justify-content: center;
+  }
+}
