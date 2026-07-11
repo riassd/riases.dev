@@ -28,14 +28,14 @@ export default function DigitalRain() {
     const draw = (time) => {
       if (time - lastTime > 55) {
         lastTime = time
-        ctx.fillStyle = 'rgba(5, 5, 5, 0.15)'
+        ctx.fillStyle = 'rgba(5, 5, 5, 0.1)'
         ctx.fillRect(0, 0, canvas.width, canvas.height)
-        ctx.font = `${fontSize}px monospace`
+        ctx.font = `bold ${fontSize}px monospace`
 
         for (let i = 0; i < columns; i++) {
           const char = CHARS[Math.floor(Math.random() * CHARS.length)]
           const y = drops[i] * fontSize
-          ctx.fillStyle = Math.random() > 0.94 ? '#f472b6' : 'rgba(244, 63, 129, 0.55)'
+          ctx.fillStyle = Math.random() > 0.92 ? '#ffffff' : 'rgba(244, 63, 129, 0.85)'
           ctx.fillText(char, i * fontSize, y)
 
           if (y > canvas.height && Math.random() > 0.975) {
