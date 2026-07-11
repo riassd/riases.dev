@@ -1,5 +1,6 @@
 import { createElement } from 'react'
 import { profile } from '../data/profile.js'
+import { unlockAchievement } from './useAchievements.js'
 
 export async function downloadResumePdf() {
   const [{ pdf }, { default: ResumeDocument }] = await Promise.all([
@@ -16,4 +17,5 @@ export async function downloadResumePdf() {
   a.click()
   a.remove()
   URL.revokeObjectURL(url)
+  unlockAchievement('cv')
 }

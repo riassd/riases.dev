@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { profile, experience, certifications } from '../data/profile.js'
 import { featuredProject, otherProjects } from '../data/projects.js'
+import { unlockAchievement } from '../hooks/useAchievements.js'
 
 const ALL_PROJECTS = [featuredProject, ...otherProjects]
 
@@ -78,7 +79,10 @@ function TerminalWindow({ open, onClose }) {
   const bottomRef = useRef(null)
 
   useEffect(() => {
-    if (open) setTimeout(() => inputRef.current?.focus(), 50)
+    if (open) {
+      setTimeout(() => inputRef.current?.focus(), 50)
+      unlockAchievement('terminal')
+    }
   }, [open])
 
   useEffect(() => {
@@ -97,6 +101,8 @@ function TerminalWindow({ open, onClose }) {
       onClose()
       return
     }
+
+    if (cmd.trim().toLowerCase() === 'sudo hire-me') unlockAchievement('hire-me')
 
     const output = runCommand(cmd)
     setLines((prev) => [

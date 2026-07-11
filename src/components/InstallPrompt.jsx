@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
+import { unlockAchievement } from '../hooks/useAchievements.js'
 
 export default function InstallPrompt() {
   const [deferredPrompt, setDeferredPrompt] = useState(null)
@@ -13,6 +14,7 @@ export default function InstallPrompt() {
     const onInstalled = () => {
       setDeferredPrompt(null)
       setInstalled(true)
+      unlockAchievement('pwa')
     }
 
     window.addEventListener('beforeinstallprompt', onBeforeInstall)

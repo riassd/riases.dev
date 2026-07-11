@@ -1,12 +1,14 @@
 import { useRef } from 'react'
 import { motion, useMotionValue, useReducedMotion, useSpring, useTransform } from 'framer-motion'
-import { FaGithub, FaLinkedin } from 'react-icons/fa6'
+import { FaGithub, FaLinkedin, FaTrophy } from 'react-icons/fa6'
 import { MdOutlineMailOutline } from 'react-icons/md'
 import { BsTerminalFill, BsFileEarmarkPdfFill } from 'react-icons/bs'
 import { profile } from '../data/profile.js'
 import { downloadResumePdf } from '../hooks/useResumePdf.js'
+import { unlockableAchievements } from '../data/unlockables.js'
+import { useAchievements } from '../hooks/useAchievements.js'
 
-const ITEMS = [
+const BASE_ITEMS = [
   {
     label: 'GitHub',
     Icon: FaGithub,
@@ -59,6 +61,7 @@ function DockIcon({ item, mouseX }) {
       aria-label={item.label}
     >
       <item.Icon />
+      {item.badge > 0 && <span className="dock-badge">{item.badge}</span>}
       <span className="dock-tooltip" aria-hidden="true">
         {item.label}
       </span>
@@ -68,6 +71,17 @@ function DockIcon({ item, mouseX }) {
 
 export default function Dock() {
   const mouseX = useMotionValue(Infinity)
+  const unlocked = useAchievements()
+
+  const items = [
+    ...BASE_ITEMS,
+    {
+      label: `Logros (${unlocked.length}/${unlockableAchievements.length})`,
+      Icon: FaTrophy,
+      badge: unlocked.length,
+      action: () => window.dispatchEvent(new Event('open-achievements')),
+    },
+  ]
 
   return (
     <motion.div
@@ -80,7 +94,7 @@ export default function Dock() {
       role="toolbar"
       aria-label="Accesos rápidos"
     >
-      {ITEMS.map((item) => (
+      {items.map((item) => (
         <DockIcon key={item.label} item={item} mouseX={mouseX} />
       ))}
     </motion.div>
