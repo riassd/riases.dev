@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import Balancer from 'react-wrap-balancer'
 import { profile } from '../data/profile.js'
 import { fadeUpItem, staggerContainer, viewport } from '../motion.js'
 import Typewriter from './Typewriter.jsx'
@@ -33,7 +34,7 @@ export default function Hero() {
           {profile.role}
         </motion.p>
         <motion.p variants={fadeUpItem} className="hero-bio">
-          {profile.bio}
+          <Balancer>{profile.bio}</Balancer>
         </motion.p>
         <motion.div variants={fadeUpItem} className="hero-actions">
           <MagneticButton className="button button-primary" href="#proyectos">

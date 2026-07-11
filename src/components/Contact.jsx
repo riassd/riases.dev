@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import Balancer from 'react-wrap-balancer'
 import { profile } from '../data/profile.js'
 import { fadeUpItem, staggerContainer, viewport } from '../motion.js'
 import MagneticButton from './MagneticButton.jsx'
@@ -22,8 +23,10 @@ export default function Contact() {
             Contacto
           </motion.h2>
           <motion.p variants={fadeUpItem} className="contact-text">
-            ¿Tienes un proyecto en mente o quieres charlar sobre automatización y ciberseguridad?
-            Escríbeme.
+            <Balancer>
+              ¿Tienes un proyecto en mente o quieres charlar sobre automatización y
+              ciberseguridad? Escríbeme.
+            </Balancer>
           </motion.p>
           <motion.a
             variants={fadeUpItem}
