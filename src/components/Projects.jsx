@@ -3,6 +3,7 @@ import Balancer from 'react-wrap-balancer'
 import { featuredProject, otherProjects } from '../data/projects.js'
 import { useSpotlight } from '../hooks/useSpotlight.js'
 import { useTilt } from '../hooks/useTilt.js'
+import { useScrambleText } from '../hooks/useScrambleText.js'
 import { fadeUpItem, scaleIn, staggerContainer, viewport } from '../motion.js'
 import MagneticButton from './MagneticButton.jsx'
 
@@ -110,6 +111,8 @@ function ProjectCard({ project }) {
 }
 
 export default function Projects() {
+  const scramble = useScrambleText('Proyectos')
+
   return (
     <motion.section
       id="proyectos"
@@ -119,8 +122,13 @@ export default function Projects() {
       viewport={viewport}
       variants={staggerContainer(0.1)}
     >
-      <motion.h2 variants={fadeUpItem} className="section-title">
-        Proyectos
+      <motion.h2
+        variants={fadeUpItem}
+        className="section-title"
+        onMouseEnter={scramble.onMouseEnter}
+        onMouseLeave={scramble.onMouseLeave}
+      >
+        {scramble.display}
       </motion.h2>
       <FeaturedCard project={featuredProject} />
       <motion.div variants={staggerContainer(0.08)} className="card-grid">
