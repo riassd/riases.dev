@@ -6,6 +6,7 @@ import Hero from './components/Hero.jsx'
 import TechMarquee from './components/TechMarquee.jsx'
 import Highlights from './components/Highlights.jsx'
 import Experience from './components/Experience.jsx'
+import StatsStrip from './components/StatsStrip.jsx'
 import Certifications from './components/Certifications.jsx'
 import Projects from './components/Projects.jsx'
 import Skills from './components/Skills.jsx'
@@ -27,6 +28,7 @@ function App() {
         <TechMarquee />
         <Highlights />
         <Experience />
+        <StatsStrip />
         <Certifications />
         <Projects />
         <Skills />

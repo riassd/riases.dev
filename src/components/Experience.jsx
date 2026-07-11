@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
-import { achievements, education, experience } from '../data/profile.js'
+import { achievements, experience } from '../data/profile.js'
 import { fadeUpItem, staggerContainer, viewport } from '../motion.js'
+import EduTimeline from './EduTimeline.jsx'
 
 export default function Experience() {
   return (
@@ -29,16 +30,7 @@ export default function Experience() {
       <motion.div variants={fadeUpItem} className="edu-achievement">
         <div>
           <h3 className="subsection-title">Educación</h3>
-          <ul className="edu-list">
-            {education.map((item) => (
-              <li key={item.degree}>
-                <p className="edu-degree">{item.degree}</p>
-                <p className="edu-school">
-                  {item.school} · {item.period}
-                </p>
-              </li>
-            ))}
-          </ul>
+          <EduTimeline />
         </div>
         <div>
           <h3 className="subsection-title">Logros</h3>
