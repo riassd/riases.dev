@@ -1,4 +1,5 @@
 import { profile } from '../data/profile.js'
+import { unlockAchievement } from './useAchievements.js'
 
 export function downloadVCard() {
   const [firstName, ...rest] = profile.name.split(' ')
@@ -26,4 +27,5 @@ export function downloadVCard() {
   a.click()
   a.remove()
   URL.revokeObjectURL(url)
+  unlockAchievement('vcard')
 }

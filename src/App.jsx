@@ -1,5 +1,6 @@
 import { lazy, Suspense } from 'react'
 import { motion } from 'framer-motion'
+import { Toaster } from 'sonner'
 import Cursor from './components/Cursor.jsx'
 import ScrollProgress from './components/ScrollProgress.jsx'
 import BackToTop from './components/BackToTop.jsx'
@@ -26,6 +27,7 @@ const CommandPalette = lazy(() => import('./components/CommandPalette.jsx'))
 const EasterEgg = lazy(() => import('./components/EasterEgg.jsx'))
 const Certifications = lazy(() => import('./components/Certifications.jsx'))
 const Terminal = lazy(() => import('./components/Terminal.jsx'))
+const Achievements = lazy(() => import('./components/Achievements.jsx'))
 
 function App() {
   useSmoothScroll()
@@ -37,10 +39,12 @@ function App() {
       </a>
       <Cursor />
       <ScrollProgress />
+      <Toaster theme="dark" position="top-right" richColors />
       <Suspense fallback={null}>
         <CommandPalette />
         <EasterEgg />
         <Terminal />
+        <Achievements />
       </Suspense>
       <BackToTop />
       <InstallPrompt />

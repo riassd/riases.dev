@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { Command } from 'cmdk'
 import { profile } from '../data/profile.js'
 import { featuredProject, otherProjects } from '../data/projects.js'
+import { unlockAchievement } from '../hooks/useAchievements.js'
 
 const SECTIONS = [
   { id: 'top', label: 'Inicio' },
@@ -29,6 +30,10 @@ export default function CommandPalette() {
     return () => document.removeEventListener('keydown', onKeyDown)
   }, [])
 
+  useEffect(() => {
+    if (open) unlockAchievement('palette')
+  }, [open])
+
   const goTo = (id) => {
     setOpen(false)
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
@@ -42,6 +47,11 @@ export default function CommandPalette() {
   const openTerminal = () => {
     setOpen(false)
     window.dispatchEvent(new Event('open-terminal'))
+  }
+
+  const openAchievements = () => {
+    setOpen(false)
+    window.dispatchEvent(new Event('open-achievements'))
   }
 
   return (
@@ -103,6 +113,7 @@ export default function CommandPalette() {
 
           <Command.Group heading="Herramientas">
             <Command.Item onSelect={openTerminal}>Abrir terminal (Ctrl+`)</Command.Item>
+            <Command.Item onSelect={openAchievements}>Ver logros</Command.Item>
           </Command.Group>
         </Command.List>
       </Command.Dialog>

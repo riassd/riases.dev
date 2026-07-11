@@ -2,12 +2,14 @@ import { useCallback, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import confetti from 'canvas-confetti'
 import { useKonamiCode } from '../hooks/useKonamiCode.js'
+import { unlockAchievement } from '../hooks/useAchievements.js'
 
 export default function EasterEgg() {
   const [visible, setVisible] = useState(false)
 
   const unlock = useCallback(() => {
     setVisible(true)
+    unlockAchievement('konami')
     if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       confetti({
         particleCount: 140,
