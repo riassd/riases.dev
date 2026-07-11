@@ -3,12 +3,14 @@ import { profile } from '../data/profile.js'
 import { fadeUpItem, staggerContainer, viewport } from '../motion.js'
 import Typewriter from './Typewriter.jsx'
 import MagneticButton from './MagneticButton.jsx'
+import HeroSphere from './HeroSphere.jsx'
 
 export default function Hero() {
   const nameWords = profile.name.split(' ')
 
   return (
     <section id="top" className="hero">
+      <HeroSphere />
       <motion.div initial="hidden" whileInView="visible" viewport={viewport} variants={staggerContainer(0.1)}>
         <motion.p variants={fadeUpItem} className="hero-eyebrow">
           Hola, soy
