@@ -1,44 +1,50 @@
+import { motion } from 'framer-motion'
 import { achievement, education, experience } from '../data/profile.js'
-import { useReveal } from '../hooks/useReveal.js'
+import { fadeUpItem, staggerContainer, viewport } from '../motion.js'
 
 export default function Experience() {
-  const reveal = useReveal()
-
   return (
-    <section id="experiencia" className="section">
-      <div ref={reveal.ref} className={reveal.className}>
-        <h2 className="section-title">Experiencia</h2>
-        <ul className="timeline">
-          {experience.map((item) => (
-            <li key={item.role} className="timeline-item">
-              <p className="timeline-period">{item.period}</p>
-              <h3 className="timeline-role">{item.role}</h3>
-              <p className="timeline-org">{item.org}</p>
-              <p className="timeline-desc">{item.description}</p>
-            </li>
-          ))}
-        </ul>
+    <motion.section
+      id="experiencia"
+      className="section"
+      initial="hidden"
+      whileInView="visible"
+      viewport={viewport}
+      variants={staggerContainer(0.1)}
+    >
+      <motion.h2 variants={fadeUpItem} className="section-title">
+        Experiencia
+      </motion.h2>
+      <motion.ul variants={staggerContainer(0.08)} className="timeline">
+        {experience.map((item) => (
+          <motion.li key={item.role} variants={fadeUpItem} className="timeline-item">
+            <p className="timeline-period">{item.period}</p>
+            <h3 className="timeline-role">{item.role}</h3>
+            <p className="timeline-org">{item.org}</p>
+            <p className="timeline-desc">{item.description}</p>
+          </motion.li>
+        ))}
+      </motion.ul>
 
-        <div className="edu-achievement">
-          <div>
-            <h3 className="subsection-title">Educación</h3>
-            <ul className="edu-list">
-              {education.map((item) => (
-                <li key={item.degree}>
-                  <p className="edu-degree">{item.degree}</p>
-                  <p className="edu-school">
-                    {item.school} · {item.period}
-                  </p>
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div className="achievement-banner">
-            <p className="achievement-title">{achievement.title}</p>
-            <p className="achievement-desc">{achievement.description}</p>
-          </div>
+      <motion.div variants={fadeUpItem} className="edu-achievement">
+        <div>
+          <h3 className="subsection-title">Educación</h3>
+          <ul className="edu-list">
+            {education.map((item) => (
+              <li key={item.degree}>
+                <p className="edu-degree">{item.degree}</p>
+                <p className="edu-school">
+                  {item.school} · {item.period}
+                </p>
+              </li>
+            ))}
+          </ul>
         </div>
-      </div>
-    </section>
+        <div className="achievement-banner">
+          <p className="achievement-title">{achievement.title}</p>
+          <p className="achievement-desc">{achievement.description}</p>
+        </div>
+      </motion.div>
+    </motion.section>
   )
 }
