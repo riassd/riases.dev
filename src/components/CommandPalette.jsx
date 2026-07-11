@@ -39,6 +39,11 @@ export default function CommandPalette() {
     window.open(url, '_blank', 'noreferrer')
   }
 
+  const openTerminal = () => {
+    setOpen(false)
+    window.dispatchEvent(new Event('open-terminal'))
+  }
+
   return (
     <>
       <button
@@ -94,6 +99,10 @@ export default function CommandPalette() {
             <Command.Item onSelect={() => openLink(`mailto:${profile.links.email}`)}>
               Enviar email
             </Command.Item>
+          </Command.Group>
+
+          <Command.Group heading="Herramientas">
+            <Command.Item onSelect={openTerminal}>Abrir terminal (Ctrl+`)</Command.Item>
           </Command.Group>
         </Command.List>
       </Command.Dialog>
