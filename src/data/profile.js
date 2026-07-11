@@ -105,40 +105,48 @@ export const certifications = [
     name: 'Introduction to Cybersecurity',
     issuer: 'Cisco Networking Academy',
     date: 'Jul 2025',
+    icon: 'cisco',
   },
   {
     name: 'Los bits y bytes de las redes informáticas (Networking)',
     issuer: 'Google',
     date: 'Ago 2023',
+    icon: 'google',
   },
   {
     name: 'Aspectos básicos de la asistencia técnica (IT Support)',
     issuer: 'Google',
     date: 'Ago 2023',
+    icon: 'google',
   },
   {
     name: 'Fundamentos profesionales del desarrollo de software',
     issuer: 'Microsoft & LinkedIn',
     date: 'Feb 2023',
+    icon: 'microsoft',
   },
   {
     name: 'Desarrollo de Software — Misión TIC 2022',
     issuer: 'Universidad Tecnológica de Pereira',
     date: 'Nov 2022',
+    icon: 'university',
   },
   {
     name: 'Fundamentos de Programación en Python — Misión TIC 2022',
     issuer: 'Universidad Tecnológica de Pereira',
     date: 'Abr 2022',
+    icon: 'university',
   },
   {
     name: 'Desarrollo de Aplicaciones Web — Misión TIC 2022',
     issuer: 'Universidad Tecnológica de Pereira',
     date: '2022',
+    icon: 'university',
   },
   {
     name: 'Programación Básica en Java — Misión TIC 2022',
     issuer: 'Universidad Tecnológica de Pereira',
     date: '2022',
+    icon: 'university',
   },
 ]
