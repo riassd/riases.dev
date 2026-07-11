@@ -1,6 +1,9 @@
 import { motion } from 'framer-motion'
 import Cursor from './components/Cursor.jsx'
 import ScrollProgress from './components/ScrollProgress.jsx'
+import CommandPalette from './components/CommandPalette.jsx'
+import EasterEgg from './components/EasterEgg.jsx'
+import BackToTop from './components/BackToTop.jsx'
 import Header from './components/Header.jsx'
 import Hero from './components/Hero.jsx'
 import TechMarquee from './components/TechMarquee.jsx'
@@ -22,6 +25,9 @@ function App() {
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.6 }}>
       <Cursor />
       <ScrollProgress />
+      <CommandPalette />
+      <EasterEgg />
+      <BackToTop />
       <Header />
       <main>
         <Hero />
