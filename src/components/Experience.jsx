@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { achievement, education, experience } from '../data/profile.js'
+import { achievements, education, experience } from '../data/profile.js'
 import { fadeUpItem, staggerContainer, viewport } from '../motion.js'
 
 export default function Experience() {
@@ -40,9 +40,16 @@ export default function Experience() {
             ))}
           </ul>
         </div>
-        <div className="achievement-banner">
-          <p className="achievement-title">{achievement.title}</p>
-          <p className="achievement-desc">{achievement.description}</p>
+        <div>
+          <h3 className="subsection-title">Logros</h3>
+          <div className="achievement-list">
+            {achievements.map((item) => (
+              <div key={item.title} className="achievement-banner">
+                <p className="achievement-title">{item.title}</p>
+                <p className="achievement-desc">{item.description}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </motion.div>
     </motion.section>

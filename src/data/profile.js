@@ -78,16 +78,67 @@ export const education = [
   {
     degree: 'Maestría en Ciberseguridad (en curso)',
     school: 'Universidad Nacional Abierta y a Distancia (UNAD)',
-    period: '2025 — Actualidad',
+    period: 'Sept 2025 — Feb 2027',
   },
   {
-    degree: 'Ingeniería de Sistemas',
+    degree: 'Ingeniería de Sistemas · Promedio ponderado 4.82',
     school: 'Universidad Nacional Abierta y a Distancia (UNAD)',
     period: '2021 — 2025',
   },
 ]
 
-export const achievement = {
-  title: '🏆 Primer lugar nacional — Reto de Innovación Abierta "Transforma País" (2023)',
-  description: 'Con el proyecto Elite Force Agro-Tech.',
-}
+export const achievements = [
+  {
+    title: '🏆 Primer lugar nacional — Reto de Innovación Abierta "Transforma País" (2023)',
+    description: 'Con el proyecto Elite Force Agro-Tech.',
+  },
+  {
+    title: '🎤 Organizador — III Simposio Internacional en Sustentabilidad',
+    description: 'Pitalito, Huila (2 y 3 de mayo de 2024).',
+  },
+]
+
+// Actualiza esta lista a mano cuando obtengas una certificación nueva
+// (no hay forma de sincronizarla automáticamente desde LinkedIn).
+export const certifications = [
+  {
+    name: 'Introduction to Cybersecurity',
+    issuer: 'Cisco Networking Academy',
+    date: 'Jul 2025',
+  },
+  {
+    name: 'Los bits y bytes de las redes informáticas (Networking)',
+    issuer: 'Google',
+    date: 'Ago 2023',
+  },
+  {
+    name: 'Aspectos básicos de la asistencia técnica (IT Support)',
+    issuer: 'Google',
+    date: 'Ago 2023',
+  },
+  {
+    name: 'Fundamentos profesionales del desarrollo de software',
+    issuer: 'Microsoft & LinkedIn',
+    date: 'Feb 2023',
+  },
+  {
+    name: 'Desarrollo de Software — Misión TIC 2022',
+    issuer: 'Universidad Tecnológica de Pereira',
+    date: 'Nov 2022',
+  },
+  {
+    name: 'Fundamentos de Programación en Python — Misión TIC 2022',
+    issuer: 'Universidad Tecnológica de Pereira',
+    date: 'Abr 2022',
+  },
+  {
+    name: 'Desarrollo de Aplicaciones Web — Misión TIC 2022',
+    issuer: 'Universidad Tecnológica de Pereira',
+    date: '2022',
+  },
+  {
+    name: 'Programación Básica en Java — Misión TIC 2022',
+    issuer: 'Universidad Tecnológica de Pereira',
+    date: '2022',
+  },
+]
