@@ -4,6 +4,7 @@ import Cursor from './components/Cursor.jsx'
 import ScrollProgress from './components/ScrollProgress.jsx'
 import BackToTop from './components/BackToTop.jsx'
 import InstallPrompt from './components/InstallPrompt.jsx'
+import Dock from './components/Dock.jsx'
 import Header from './components/Header.jsx'
 import Hero from './components/Hero.jsx'
 import TechMarquee from './components/TechMarquee.jsx'
@@ -43,6 +44,7 @@ function App() {
       </Suspense>
       <BackToTop />
       <InstallPrompt />
+      <Dock />
       <Header />
       <main id="main-content">
         <Hero />

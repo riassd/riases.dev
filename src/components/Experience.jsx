@@ -1,9 +1,12 @@
 import { motion } from 'framer-motion'
 import { achievements, experience } from '../data/profile.js'
+import { useScrambleText } from '../hooks/useScrambleText.js'
 import { fadeUpItem, staggerContainer, viewport } from '../motion.js'
 import EduTimeline from './EduTimeline.jsx'
 
 export default function Experience() {
+  const scramble = useScrambleText('Experiencia')
+
   return (
     <motion.section
       id="experiencia"
@@ -13,8 +16,13 @@ export default function Experience() {
       viewport={viewport}
       variants={staggerContainer(0.1)}
     >
-      <motion.h2 variants={fadeUpItem} className="section-title">
-        Experiencia
+      <motion.h2
+        variants={fadeUpItem}
+        className="section-title"
+        onMouseEnter={scramble.onMouseEnter}
+        onMouseLeave={scramble.onMouseLeave}
+      >
+        {scramble.display}
       </motion.h2>
       <motion.ul variants={staggerContainer(0.08)} className="timeline">
         {experience.map((item) => (

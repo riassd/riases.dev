@@ -2,6 +2,7 @@ import { motion } from 'framer-motion'
 import { highlights } from '../data/highlights.js'
 import { useSpotlight } from '../hooks/useSpotlight.js'
 import { useTilt } from '../hooks/useTilt.js'
+import { useScrambleText } from '../hooks/useScrambleText.js'
 import { fadeUpItem, scaleIn, staggerContainer, viewport } from '../motion.js'
 
 function BentoItem({ item }) {
@@ -26,6 +27,8 @@ function BentoItem({ item }) {
 }
 
 export default function Highlights() {
+  const scramble = useScrambleText('En pocas palabras')
+
   return (
     <motion.section
       className="section"
@@ -34,8 +37,13 @@ export default function Highlights() {
       viewport={viewport}
       variants={staggerContainer(0.1)}
     >
-      <motion.h2 variants={fadeUpItem} className="section-title">
-        En pocas palabras
+      <motion.h2
+        variants={fadeUpItem}
+        className="section-title"
+        onMouseEnter={scramble.onMouseEnter}
+        onMouseLeave={scramble.onMouseLeave}
+      >
+        {scramble.display}
       </motion.h2>
       <motion.div variants={staggerContainer(0.07)} className="bento">
         {highlights.map((item) => (
