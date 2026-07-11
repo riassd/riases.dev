@@ -9,12 +9,6 @@ export default function Hero() {
 
   return (
     <section id="top" className="hero">
-      <div className="hero-aura" aria-hidden="true">
-        <span className="aura aura-a" />
-        <span className="aura aura-b" />
-        <span className="aura aura-c" />
-      </div>
-
       <motion.div initial="hidden" whileInView="visible" viewport={viewport} variants={staggerContainer(0.1)}>
         <motion.p variants={fadeUpItem} className="hero-eyebrow">
           Hola, soy
