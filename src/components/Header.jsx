@@ -2,6 +2,7 @@ import { useActiveSection } from '../hooks/useActiveSection.js'
 
 const LINKS = [
   { id: 'experiencia', label: 'Experiencia' },
+  { id: 'certificaciones', label: 'Certificaciones' },
   { id: 'proyectos', label: 'Proyectos' },
   { id: 'skills', label: 'Skills' },
   { id: 'contacto', label: 'Contacto' },

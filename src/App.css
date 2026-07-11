@@ -265,6 +265,38 @@ main {
   border: 1px dashed var(--border);
 }
 
+.cert-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+}
+
+.cert-card {
+  padding: 20px;
+  border-radius: 14px;
+  background: var(--bg-subtle);
+  border: 1px solid var(--border);
+  transition: border-color 0.25s, box-shadow 0.25s, transform 0.2s;
+}
+
+.cert-card:hover {
+  border-color: var(--accent);
+  box-shadow: 0 0 20px rgba(255, 210, 31, 0.18);
+  transform: translateY(-2px);
+}
+
+.cert-name {
+  color: var(--fg);
+  font-weight: 600;
+  font-size: 15px;
+  margin-bottom: 6px;
+}
+
+.cert-meta {
+  font-size: 13px;
+  font-family: var(--mono);
+}
+
 .section {
   padding: 10vh 0;
   border-top: 1px solid var(--border);
@@ -663,6 +695,11 @@ main {
 .edu-school {
   font-size: 14px;
   margin-top: 4px;
+}
+
+.achievement-list {
+  display: grid;
+  gap: 16px;
 }
 
 .achievement-banner {
