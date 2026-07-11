@@ -1,19 +1,58 @@
+import { useLayoutEffect } from 'react'
 import { motion } from 'framer-motion'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import Balancer from 'react-wrap-balancer'
 import { featuredProject, otherProjects } from '../data/projects.js'
 import { useSpotlight } from '../hooks/useSpotlight.js'
 import { useTilt } from '../hooks/useTilt.js'
 import { useScrambleText } from '../hooks/useScrambleText.js'
-import { fadeUpItem, scaleIn, staggerContainer, viewport } from '../motion.js'
+import { fadeUpItem, staggerContainer, viewport } from '../motion.js'
 import MagneticButton from './MagneticButton.jsx'
+
+gsap.registerPlugin(ScrollTrigger)
+
+// Cards reveal on a scroll-scrubbed GSAP timeline instead of the
+// threshold-triggered Framer Motion `whileInView` used elsewhere on the
+// site — a deliberately different, more tactile animation paradigm tied
+// directly to scroll position (see useSmoothScroll's Lenis/GSAP sync).
+function useScrollReveal(ref, build) {
+  // Mount-once by design (the GSAP+React convention): `build` closures only
+  // read static project data, so re-running per render would just tear down
+  // and recreate the same ScrollTrigger for no benefit.
+  useLayoutEffect(() => {
+    const root = ref.current
+    if (!root) return
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+
+    const ctx = gsap.context(() => build(root), root)
+    return () => ctx.revert()
+    // oxlint-disable-next-line exhaustive-deps
+  }, [])
+}
 
 function FeaturedCard({ project }) {
   const spotlight = useSpotlight()
   const tilt = useTilt()
 
+  useScrollReveal(spotlight.ref, (root) => {
+    gsap
+      .timeline({
+        scrollTrigger: { trigger: root, start: 'top 85%', end: 'top 30%', scrub: 0.6 },
+      })
+      .from('.card-eyebrow, .card-title, .card-tagline, .card-description', {
+        opacity: 0,
+        y: 24,
+        stagger: 0.12,
+        ease: 'none',
+      })
+      .from('.card-highlights li', { opacity: 0, x: -16, stagger: 0.06, ease: 'none' }, '<0.15')
+      .from('.tech-list li', { opacity: 0, scale: 0.85, stagger: 0.04, ease: 'none' }, '<0.1')
+      .from('.card-actions', { opacity: 0, y: 16, ease: 'none' }, '<0.1')
+  })
+
   return (
     <motion.div
-      variants={scaleIn}
       style={tilt.style}
       onMouseMove={tilt.onMouseMove}
       onMouseLeave={tilt.onMouseLeave}
@@ -70,10 +109,18 @@ function ProjectCard({ project }) {
   const tilt = useTilt()
   const links = project.links ?? (project.repoUrl ? [{ label: 'Repositorio', url: project.repoUrl }] : [])
 
+  useScrollReveal(spotlight.ref, (root) => {
+    gsap.from(root, {
+      opacity: 0,
+      y: 40,
+      ease: 'none',
+      scrollTrigger: { trigger: root, start: 'top 92%', end: 'top 60%', scrub: 0.6 },
+    })
+  })
+
   return (
     <motion.article
       ref={spotlight.ref}
-      variants={fadeUpItem}
       style={tilt.style}
       onMouseMove={(e) => {
         spotlight.onMouseMove(e)
@@ -131,11 +178,11 @@ export default function Projects() {
         {scramble.display}
       </motion.h2>
       <FeaturedCard project={featuredProject} />
-      <motion.div variants={staggerContainer(0.08)} className="card-grid">
+      <div className="card-grid">
         {otherProjects.map((project) => (
           <ProjectCard key={project.name} project={project} />
         ))}
-      </motion.div>
+      </div>
     </motion.section>
   )
 }
