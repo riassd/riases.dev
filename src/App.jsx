@@ -3,6 +3,7 @@ import { motion } from 'framer-motion'
 import Cursor from './components/Cursor.jsx'
 import ScrollProgress from './components/ScrollProgress.jsx'
 import BackToTop from './components/BackToTop.jsx'
+import InstallPrompt from './components/InstallPrompt.jsx'
 import Header from './components/Header.jsx'
 import Hero from './components/Hero.jsx'
 import TechMarquee from './components/TechMarquee.jsx'
@@ -23,6 +24,7 @@ import './App.css'
 const CommandPalette = lazy(() => import('./components/CommandPalette.jsx'))
 const EasterEgg = lazy(() => import('./components/EasterEgg.jsx'))
 const Certifications = lazy(() => import('./components/Certifications.jsx'))
+const Terminal = lazy(() => import('./components/Terminal.jsx'))
 
 function App() {
   useSmoothScroll()
@@ -37,8 +39,10 @@ function App() {
       <Suspense fallback={null}>
         <CommandPalette />
         <EasterEgg />
+        <Terminal />
       </Suspense>
       <BackToTop />
+      <InstallPrompt />
       <Header />
       <main id="main-content">
         <Hero />
