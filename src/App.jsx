@@ -9,6 +9,7 @@ import TechMarquee from './components/TechMarquee.jsx'
 import Highlights from './components/Highlights.jsx'
 import Experience from './components/Experience.jsx'
 import StatsStrip from './components/StatsStrip.jsx'
+import GitHubPulse from './components/GitHubPulse.jsx'
 import Projects from './components/Projects.jsx'
 import Skills from './components/Skills.jsx'
 import Contact from './components/Contact.jsx'
@@ -45,6 +46,7 @@ function App() {
         <Highlights />
         <Experience />
         <StatsStrip />
+        <GitHubPulse />
         <Suspense fallback={<div className="section" />}>
           <Certifications />
         </Suspense>
