@@ -729,8 +729,7 @@ main {
   position: absolute;
   inset: 0;
   z-index: 0;
-  opacity: 0.5;
-  mix-blend-mode: screen;
+  opacity: 0.9;
   pointer-events: none;
   mask-image: linear-gradient(to bottom, transparent, black 15%, black 85%, transparent);
 }
