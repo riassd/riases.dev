@@ -15,15 +15,29 @@ export const profile = {
     'en roles de analista de ciberseguridad junior, gestión de riesgos TI y monitoreo de ' +
     'seguridad.',
   location: 'Pitalito, Huila, Colombia',
-  skills: [
-    'Gestión de Riesgos TI',
-    'Soporte Técnico (Hardware, Software, Redes)',
-    'Monitoreo de Incidentes',
-    'JavaScript / Node.js',
-    'Python',
-    'Java',
-    'Electron',
-    'PowerShell',
+  skillGroups: [
+    {
+      title: 'Ciberseguridad',
+      tone: 'pink',
+      skills: [
+        'Gestión de Riesgos TI',
+        'RBAC / Control de Acceso',
+        'Auditoría y Logging',
+        'OWASP: XSS y tokens de un solo uso',
+        'Gestión de Secretos (.env)',
+        'Monitoreo de Incidentes',
+      ],
+    },
+    {
+      title: 'Desarrollo & Automatización',
+      tone: 'blue',
+      skills: ['JavaScript / Node.js', 'Python', 'Java', 'Electron', 'FastAPI', 'React'],
+    },
+    {
+      title: 'Infraestructura & Soporte',
+      tone: 'green',
+      skills: ['PowerShell', 'Docker', 'Supabase / PostgreSQL', 'Soporte Técnico (HW/SW/Redes)'],
+    },
   ],
   links: {
     github: 'https://github.com/riassd',

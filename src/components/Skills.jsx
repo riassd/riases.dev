@@ -1,27 +1,36 @@
 import { motion } from 'framer-motion'
 import { profile } from '../data/profile.js'
 import { fadeUpItem, staggerContainer, viewport } from '../motion.js'
+import DigitalRain from './DigitalRain.jsx'
 
 export default function Skills() {
   return (
     <motion.section
       id="skills"
-      className="section"
+      className="section section-skills"
       initial="hidden"
       whileInView="visible"
       viewport={viewport}
       variants={staggerContainer(0.1)}
     >
-      <motion.h2 variants={fadeUpItem} className="section-title">
+      <DigitalRain />
+      <motion.h2 variants={fadeUpItem} className="section-title glitch" data-text="Skills">
         Skills
       </motion.h2>
-      <motion.ul variants={staggerContainer(0.04)} className="skills-list">
-        {profile.skills.map((skill) => (
-          <motion.li key={skill} variants={fadeUpItem}>
-            {skill}
-          </motion.li>
+      <motion.div variants={staggerContainer(0.12)} className="skill-groups">
+        {profile.skillGroups.map((group) => (
+          <motion.div key={group.title} variants={fadeUpItem} className="skill-group">
+            <h3 className={`skill-group-title skill-group-title--${group.tone}`}>{group.title}</h3>
+            <ul className="skills-list">
+              {group.skills.map((skill) => (
+                <li key={skill} className={`skill-pill skill-pill--${group.tone}`}>
+                  {skill}
+                </li>
+              ))}
+            </ul>
+          </motion.div>
         ))}
-      </motion.ul>
+      </motion.div>
     </motion.section>
   )
 }
