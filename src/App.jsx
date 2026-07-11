@@ -1,4 +1,5 @@
 import Cursor from './components/Cursor.jsx'
+import ScrollProgress from './components/ScrollProgress.jsx'
 import Header from './components/Header.jsx'
 import Hero from './components/Hero.jsx'
 import Highlights from './components/Highlights.jsx'
@@ -13,6 +14,7 @@ function App() {
   return (
     <>
       <Cursor />
+      <ScrollProgress />
       <Header />
       <main>
         <Hero />

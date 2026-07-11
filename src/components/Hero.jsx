@@ -1,6 +1,7 @@
 import { profile } from '../data/profile.js'
 import { useReveal } from '../hooks/useReveal.js'
 import Typewriter from './Typewriter.jsx'
+import MagneticButton from './MagneticButton.jsx'
 
 export default function Hero() {
   const reveal = useReveal()
@@ -16,12 +17,12 @@ export default function Hero() {
         <p className="hero-degree">{profile.role}</p>
         <p className="hero-bio">{profile.bio}</p>
         <div className="hero-actions">
-          <a className="button button-primary" href="#proyectos" data-cursor="hover">
+          <MagneticButton className="button button-primary" href="#proyectos">
             Ver proyectos
-          </a>
-          <a className="button button-ghost" href="#contacto" data-cursor="hover">
+          </MagneticButton>
+          <MagneticButton className="button button-ghost" href="#contacto">
             Contacto
-          </a>
+          </MagneticButton>
         </div>
       </div>
     </section>

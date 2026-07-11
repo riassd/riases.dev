@@ -28,18 +28,56 @@
   gap: 32px;
 }
 
-.nav a {
+.nav-link {
+  position: relative;
   text-decoration: none;
   color: var(--muted);
   font-size: 14px;
   text-transform: uppercase;
   letter-spacing: 1px;
   transition: color 0.2s;
+  padding-bottom: 4px;
 }
 
-.nav a:hover {
+.nav-link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 100%;
+  bottom: 0;
+  height: 2px;
+  background: var(--accent);
+  transition: right 0.3s ease;
+}
+
+.nav-link:hover {
   color: var(--fg);
 }
+
+.nav-link--active {
+  color: var(--fg);
+}
+
+.nav-link--active::after {
+  right: 0;
+}
+
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  z-index: 20;
+  background: transparent;
+}
+
+.scroll-progress-bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--accent), #f472b6);
+}
+
 
 main {
   max-width: 1040px;
@@ -119,6 +157,36 @@ main {
   gap: 16px;
 }
 
+.hero > .reveal > * {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.hero > .reveal--visible > * {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.hero > .reveal--visible > *:nth-child(1) {
+  transition-delay: 0ms;
+}
+.hero > .reveal--visible > *:nth-child(2) {
+  transition-delay: 90ms;
+}
+.hero > .reveal--visible > *:nth-child(3) {
+  transition-delay: 180ms;
+}
+.hero > .reveal--visible > *:nth-child(4) {
+  transition-delay: 240ms;
+}
+.hero > .reveal--visible > *:nth-child(5) {
+  transition-delay: 300ms;
+}
+.hero > .reveal--visible > *:nth-child(6) {
+  transition-delay: 380ms;
+}
+
 .button {
   display: inline-flex;
   align-items: center;
@@ -128,7 +196,7 @@ main {
   font-weight: 600;
   font-size: 15px;
   border: 1px solid transparent;
-  transition: border-color 0.2s, background 0.2s, color 0.2s;
+  transition: border-color 0.2s, background 0.2s, color 0.2s, transform 0.2s ease-out;
 }
 
 .button-primary {
@@ -182,6 +250,28 @@ main {
   text-align: left;
   overflow: hidden;
   transition: border-color 0.3s, transform 0.3s;
+}
+
+.card::before,
+.bento-item::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: radial-gradient(
+    280px circle at var(--spot-x, 50%) var(--spot-y, 50%),
+    color-mix(in srgb, var(--fg) 25%, transparent),
+    transparent 70%
+  );
+  mix-blend-mode: overlay;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.card:hover::before,
+.bento-item:hover::before {
+  opacity: 1;
 }
 
 .card:hover {
@@ -275,6 +365,88 @@ main {
   gap: 20px;
 }
 
+.card-grid .card:nth-child(1) {
+  transition-delay: 0ms;
+}
+.card-grid .card:nth-child(2) {
+  transition-delay: 90ms;
+}
+.card-grid .card:nth-child(3) {
+  transition-delay: 180ms;
+}
+.card-grid .card:nth-child(4) {
+  transition-delay: 270ms;
+}
+
+.reveal .bento-item,
+.reveal .timeline-item,
+.reveal .skills-list li {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.reveal--visible .bento-item,
+.reveal--visible .timeline-item,
+.reveal--visible .skills-list li {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal--visible .bento-item:nth-child(1) {
+  transition-delay: 0ms;
+}
+.reveal--visible .bento-item:nth-child(2) {
+  transition-delay: 80ms;
+}
+.reveal--visible .bento-item:nth-child(3) {
+  transition-delay: 160ms;
+}
+.reveal--visible .bento-item:nth-child(4) {
+  transition-delay: 240ms;
+}
+.reveal--visible .bento-item:nth-child(5) {
+  transition-delay: 320ms;
+}
+.reveal--visible .bento-item:nth-child(6) {
+  transition-delay: 400ms;
+}
+
+.reveal--visible .timeline-item:nth-child(1) {
+  transition-delay: 0ms;
+}
+.reveal--visible .timeline-item:nth-child(2) {
+  transition-delay: 120ms;
+}
+.reveal--visible .timeline-item:nth-child(3) {
+  transition-delay: 240ms;
+}
+
+.reveal--visible .skills-list li:nth-child(1) {
+  transition-delay: 0ms;
+}
+.reveal--visible .skills-list li:nth-child(2) {
+  transition-delay: 60ms;
+}
+.reveal--visible .skills-list li:nth-child(3) {
+  transition-delay: 120ms;
+}
+.reveal--visible .skills-list li:nth-child(4) {
+  transition-delay: 180ms;
+}
+.reveal--visible .skills-list li:nth-child(5) {
+  transition-delay: 240ms;
+}
+.reveal--visible .skills-list li:nth-child(6) {
+  transition-delay: 300ms;
+}
+.reveal--visible .skills-list li:nth-child(7) {
+  transition-delay: 360ms;
+}
+.reveal--visible .skills-list li:nth-child(8) {
+  transition-delay: 420ms;
+}
+
 .bento {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -283,12 +455,14 @@ main {
 }
 
 .bento-item {
+  position: relative;
   border-radius: 20px;
   padding: 24px;
   display: flex;
   align-items: flex-end;
   background: var(--bg-subtle);
   border: 1px solid var(--border);
+  overflow: hidden;
   transition: transform 0.3s, box-shadow 0.3s;
 }
 

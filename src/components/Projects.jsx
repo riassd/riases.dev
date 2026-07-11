@@ -1,11 +1,21 @@
 import { featuredProject, otherProjects } from '../data/projects.js'
 import { useReveal } from '../hooks/useReveal.js'
+import { useSpotlight } from '../hooks/useSpotlight.js'
+import MagneticButton from './MagneticButton.jsx'
 
 function FeaturedCard({ project }) {
   const reveal = useReveal()
+  const spotlight = useSpotlight()
 
   return (
-    <article ref={reveal.ref} className={`card card-featured ${reveal.className}`}>
+    <article
+      ref={(node) => {
+        reveal.ref.current = node
+        spotlight.ref.current = node
+      }}
+      onMouseMove={spotlight.onMouseMove}
+      className={`card card-featured ${reveal.className}`}
+    >
       <span className="card-index">{project.index}</span>
       <div className="card-body">
         <p className="card-eyebrow">Proyecto destacado</p>
@@ -27,25 +37,18 @@ function FeaturedCard({ project }) {
             <span className="badge-private">Repositorio privado</span>
           ) : (
             <>
-              <a
-                className="button button-primary"
-                href={project.repoUrl}
-                target="_blank"
-                rel="noreferrer"
-                data-cursor="hover"
-              >
+              <MagneticButton className="button button-primary" href={project.repoUrl} target="_blank" rel="noreferrer">
                 Ver repositorio
-              </a>
+              </MagneticButton>
               {project.releasesUrl && (
-                <a
+                <MagneticButton
                   className="button button-ghost"
                   href={project.releasesUrl}
                   target="_blank"
                   rel="noreferrer"
-                  data-cursor="hover"
                 >
                   Descargas
-                </a>
+                </MagneticButton>
               )}
             </>
           )}
@@ -57,10 +60,18 @@ function FeaturedCard({ project }) {
 
 function ProjectCard({ project }) {
   const reveal = useReveal()
+  const spotlight = useSpotlight()
   const links = project.links ?? (project.repoUrl ? [{ label: 'Repositorio', url: project.repoUrl }] : [])
 
   return (
-    <article ref={reveal.ref} className={`card ${reveal.className}`}>
+    <article
+      ref={(node) => {
+        reveal.ref.current = node
+        spotlight.ref.current = node
+      }}
+      onMouseMove={spotlight.onMouseMove}
+      className={`card ${reveal.className}`}
+    >
       <span className="card-index">{project.index}</span>
       <div className="card-body">
         <h3 className="card-title">{project.name}</h3>
@@ -78,16 +89,9 @@ function ProjectCard({ project }) {
             <span className="badge-private">Repositorio privado</span>
           ) : (
             links.map((link) => (
-              <a
-                key={link.url}
-                className="button button-ghost"
-                href={link.url}
-                target="_blank"
-                rel="noreferrer"
-                data-cursor="hover"
-              >
+              <MagneticButton key={link.url} className="button button-ghost" href={link.url} target="_blank" rel="noreferrer">
                 {link.label}
-              </a>
+              </MagneticButton>
             ))
           )}
         </div>

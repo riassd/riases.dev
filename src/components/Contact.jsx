@@ -1,5 +1,6 @@
 import { profile } from '../data/profile.js'
 import { useReveal } from '../hooks/useReveal.js'
+import MagneticButton from './MagneticButton.jsx'
 
 export default function Contact() {
   const reveal = useReveal()
@@ -16,24 +17,22 @@ export default function Contact() {
           {profile.links.email}
         </a>
         <div className="contact-links">
-          <a
+          <MagneticButton
             className="button button-ghost"
             href={profile.links.github}
             target="_blank"
             rel="noreferrer"
-            data-cursor="hover"
           >
             GitHub
-          </a>
-          <a
+          </MagneticButton>
+          <MagneticButton
             className="button button-ghost"
             href={profile.links.linkedin}
             target="_blank"
             rel="noreferrer"
-            data-cursor="hover"
           >
             LinkedIn
-          </a>
+          </MagneticButton>
         </div>
       </div>
     </section>

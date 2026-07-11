@@ -1,22 +1,31 @@
+import { useActiveSection } from '../hooks/useActiveSection.js'
+
+const LINKS = [
+  { id: 'experiencia', label: 'Experiencia' },
+  { id: 'proyectos', label: 'Proyectos' },
+  { id: 'skills', label: 'Skills' },
+  { id: 'contacto', label: 'Contacto' },
+]
+
 export default function Header() {
+  const active = useActiveSection(LINKS.map((l) => l.id))
+
   return (
     <header className="site-header">
       <a className="brand" href="#top" data-cursor="hover">
         riassd<span className="brand-dot">.</span>
       </a>
       <nav className="nav">
-        <a href="#experiencia" data-cursor="hover">
-          Experiencia
-        </a>
-        <a href="#proyectos" data-cursor="hover">
-          Proyectos
-        </a>
-        <a href="#skills" data-cursor="hover">
-          Skills
-        </a>
-        <a href="#contacto" data-cursor="hover">
-          Contacto
-        </a>
+        {LINKS.map((link) => (
+          <a
+            key={link.id}
+            href={`#${link.id}`}
+            data-cursor="hover"
+            className={active === link.id ? 'nav-link nav-link--active' : 'nav-link'}
+          >
+            {link.label}
+          </a>
+        ))}
       </nav>
     </header>
   )
