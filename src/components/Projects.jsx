@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import Balancer from 'react-wrap-balancer'
 import { featuredProject, otherProjects } from '../data/projects.js'
 import { useSpotlight } from '../hooks/useSpotlight.js'
 import { useTilt } from '../hooks/useTilt.js'
@@ -22,7 +23,9 @@ function FeaturedCard({ project }) {
         <div className="card-body">
           <p className="card-eyebrow">Proyecto destacado</p>
           <h3 className="card-title">{project.name}</h3>
-          <p className="card-tagline">{project.tagline}</p>
+          <p className="card-tagline">
+            <Balancer>{project.tagline}</Balancer>
+          </p>
           <p className="card-description">{project.description}</p>
           <ul className="card-highlights">
             {project.highlights.map((item) => (
