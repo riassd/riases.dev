@@ -1,90 +1,85 @@
-import { useLayoutEffect } from 'react'
-import { motion } from 'framer-motion'
-import gsap from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import Balancer from 'react-wrap-balancer'
+import { useState } from 'react'
+import { AnimatePresence, motion } from 'framer-motion'
 import { featuredProject, otherProjects } from '../data/projects.js'
-import { useSpotlight } from '../hooks/useSpotlight.js'
-import { useTilt } from '../hooks/useTilt.js'
 import { useScrambleText } from '../hooks/useScrambleText.js'
 import { fadeUpItem, staggerContainer, viewport } from '../motion.js'
 import MagneticButton from './MagneticButton.jsx'
 
-gsap.registerPlugin(ScrollTrigger)
+const ALL_PROJECTS = [featuredProject, ...otherProjects]
 
-// Cards reveal on a scroll-scrubbed GSAP timeline instead of the
-// threshold-triggered Framer Motion `whileInView` used elsewhere on the
-// site — a deliberately different, more tactile animation paradigm tied
-// directly to scroll position (see useSmoothScroll's Lenis/GSAP sync).
-function useScrollReveal(ref, build) {
-  // Mount-once by design (the GSAP+React convention): `build` closures only
-  // read static project data, so re-running per render would just tear down
-  // and recreate the same ScrollTrigger for no benefit.
-  useLayoutEffect(() => {
-    const root = ref.current
-    if (!root) return
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
-
-    const ctx = gsap.context(() => build(root), root)
-    return () => ctx.revert()
-    // oxlint-disable-next-line exhaustive-deps
-  }, [])
-}
-
-function FeaturedCard({ project }) {
-  const spotlight = useSpotlight()
-  const tilt = useTilt()
-
-  useScrollReveal(spotlight.ref, (root) => {
-    gsap
-      .timeline({
-        scrollTrigger: { trigger: root, start: 'top 85%', end: 'top 30%', scrub: 0.6 },
-      })
-      .from('.card-eyebrow, .card-title, .card-tagline, .card-description', {
-        opacity: 0,
-        y: 24,
-        stagger: 0.12,
-        ease: 'none',
-      })
-      .from('.card-highlights li', { opacity: 0, x: -16, stagger: 0.06, ease: 'none' }, '<0.15')
-      .from('.tech-list li', { opacity: 0, scale: 0.85, stagger: 0.04, ease: 'none' }, '<0.1')
-      .from('.card-actions', { opacity: 0, y: 16, ease: 'none' }, '<0.1')
-  })
+function ProjectRow({ project, isOpen, onToggle }) {
+  const links = project.links ?? (project.repoUrl ? [{ label: 'Repositorio', url: project.repoUrl }] : [])
+  const previewTech = project.tech.slice(0, 3)
+  const extraTech = project.tech.length - previewTech.length
 
   return (
-    <motion.div
-      style={tilt.style}
-      onMouseMove={tilt.onMouseMove}
-      onMouseLeave={tilt.onMouseLeave}
-      className="beam-wrap"
-    >
-      <article ref={spotlight.ref} onMouseMove={spotlight.onMouseMove} className="card card-featured">
-        <span className="card-index">{project.index}</span>
-        <div className="card-body">
-          <p className="card-eyebrow">Proyecto destacado</p>
-          <h3 className="card-title">{project.name}</h3>
-          <p className="card-tagline">
-            <Balancer>{project.tagline}</Balancer>
-          </p>
-          <p className="card-description">{project.description}</p>
-          <ul className="card-highlights">
-            {project.highlights.map((item) => (
-              <li key={item}>{item}</li>
-            ))}
-          </ul>
-          <ul className="tech-list">
-            {project.tech.map((tech) => (
-              <li key={tech}>{tech}</li>
-            ))}
-          </ul>
-          <div className="card-actions">
-            {project.private ? (
-              <span className="badge-private">Repositorio privado</span>
-            ) : (
-              <>
-                <MagneticButton className="button button-primary" href={project.repoUrl} target="_blank" rel="noreferrer">
-                  Ver repositorio
-                </MagneticButton>
+    <motion.div variants={fadeUpItem} className="proj-row" data-open={isOpen}>
+      <button
+        type="button"
+        className="proj-row-header"
+        onClick={onToggle}
+        aria-expanded={isOpen}
+        data-cursor="hover"
+      >
+        <span className="proj-row-index">{project.index}</span>
+        <div className="proj-row-heading">
+          <h3 className="proj-row-name">
+            {project.name}
+            {project === featuredProject && <span className="proj-row-badge">Destacado</span>}
+          </h3>
+          <p className="proj-row-tagline">{project.tagline}</p>
+        </div>
+        <ul className="proj-row-tech" aria-hidden="true">
+          {previewTech.map((tech) => (
+            <li key={tech}>{tech}</li>
+          ))}
+          {extraTech > 0 && <li className="proj-row-tech-more">+{extraTech}</li>}
+        </ul>
+        <span className="proj-row-chevron" aria-hidden="true">
+          &#8595;
+        </span>
+      </button>
+
+      <AnimatePresence initial={false}>
+        {isOpen && (
+          <motion.div
+            key="content"
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+            className="proj-row-content"
+          >
+            <div className="proj-row-content-inner">
+              {project.description && <p className="proj-row-description">{project.description}</p>}
+              {project.highlights && (
+                <ul className="proj-row-highlights">
+                  {project.highlights.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+              )}
+              <ul className="proj-row-alltech">
+                {project.tech.map((tech) => (
+                  <li key={tech}>{tech}</li>
+                ))}
+              </ul>
+              <div className="proj-row-actions">
+                {project.private ? (
+                  <span className="badge-private">Repositorio privado</span>
+                ) : (
+                  links.map((link) => (
+                    <MagneticButton
+                      key={link.url}
+                      className="button button-ghost"
+                      href={link.url}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      {link.label}
+                    </MagneticButton>
+                  ))
+                )}
                 {project.releasesUrl && (
                   <MagneticButton
                     className="button button-ghost"
@@ -95,70 +90,18 @@ function FeaturedCard({ project }) {
                     Descargas
                   </MagneticButton>
                 )}
-              </>
-            )}
-          </div>
-        </div>
-      </article>
-    </motion.div>
-  )
-}
-
-function ProjectCard({ project }) {
-  const spotlight = useSpotlight()
-  const tilt = useTilt()
-  const links = project.links ?? (project.repoUrl ? [{ label: 'Repositorio', url: project.repoUrl }] : [])
-
-  useScrollReveal(spotlight.ref, (root) => {
-    gsap.from(root, {
-      opacity: 0,
-      y: 40,
-      ease: 'none',
-      scrollTrigger: { trigger: root, start: 'top 92%', end: 'top 60%', scrub: 0.6 },
-    })
-  })
-
-  return (
-    <motion.article
-      ref={spotlight.ref}
-      style={tilt.style}
-      onMouseMove={(e) => {
-        spotlight.onMouseMove(e)
-        tilt.onMouseMove(e)
-      }}
-      onMouseLeave={tilt.onMouseLeave}
-      className="card"
-    >
-      <span className="card-index">{project.index}</span>
-      <div className="card-body">
-        <h3 className="card-title">{project.name}</h3>
-        <p className="card-tagline">{project.tagline}</p>
-        {project.description && <p className="card-description">{project.description}</p>}
-        {project.tech.length > 0 && (
-          <ul className="tech-list">
-            {project.tech.map((tech) => (
-              <li key={tech}>{tech}</li>
-            ))}
-          </ul>
+              </div>
+            </div>
+          </motion.div>
         )}
-        <div className="card-actions">
-          {project.private ? (
-            <span className="badge-private">Repositorio privado</span>
-          ) : (
-            links.map((link) => (
-              <MagneticButton key={link.url} className="button button-ghost" href={link.url} target="_blank" rel="noreferrer">
-                {link.label}
-              </MagneticButton>
-            ))
-          )}
-        </div>
-      </div>
-    </motion.article>
+      </AnimatePresence>
+    </motion.div>
   )
 }
 
 export default function Projects() {
   const scramble = useScrambleText('Proyectos')
+  const [openIndex, setOpenIndex] = useState(0)
 
   return (
     <motion.section
@@ -177,12 +120,16 @@ export default function Projects() {
       >
         {scramble.display}
       </motion.h2>
-      <FeaturedCard project={featuredProject} />
-      <div className="card-grid">
-        {otherProjects.map((project) => (
-          <ProjectCard key={project.name} project={project} />
+      <motion.div variants={staggerContainer(0.06)} className="proj-list">
+        {ALL_PROJECTS.map((project, i) => (
+          <ProjectRow
+            key={project.name}
+            project={project}
+            isOpen={openIndex === i}
+            onToggle={() => setOpenIndex(openIndex === i ? -1 : i)}
+          />
         ))}
-      </div>
+      </motion.div>
     </motion.section>
   )
 }
