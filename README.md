@@ -3,7 +3,7 @@
 Portafolio personal de Jhunier Hernandez Calderon ([@riassd](https://github.com/riassd)),
 construido con React + Vite y publicado en GitHub Pages.
 
-🔗 **https://riassd.github.io/riases.dev/**
+🔗 **https://rlases.dev/**
 
 ## Desarrollo local
 
@@ -33,9 +33,9 @@ Pages una vez en el repo: **Settings → Pages → Source → GitHub Actions**.
 
 ## Notas
 
-Este repo se llama `riases.dev` en lugar de `riassd.github.io`, así que el
-sitio se publica en una subruta (`/riases.dev/`) en vez de en la raíz del
-dominio. Si renombras el repo de nuevo, actualiza `base` en `vite.config.js`
-para que coincida exactamente con el nuevo nombre — si no, los assets dan
-404 y la página se ve en blanco. Si más adelante renombras el repo a
-`riassd.github.io`, cambia `base` a `'/'`.
+El sitio se publica en el dominio propio `rlases.dev` (configurado vía el
+archivo `CNAME` en `public/` + los registros DNS en el proveedor del
+dominio), así que se sirve desde la raíz y `base` en `vite.config.js` es
+`'/'`. Si alguna vez se quita el dominio propio, `base` debe volver a
+`'/<nombre-del-repo>/'` para que coincida con la subruta por defecto de
+GitHub Pages — si no, los assets dan 404 y la página se ve en blanco.

@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://riassd.github.io/riases.dev/sitemap.xml
+Sitemap: https://rlases.dev/sitemap.xml

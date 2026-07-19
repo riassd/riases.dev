@@ -2,12 +2,12 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { VitePWA } from 'vite-plugin-pwa'
 
-// Project site (repo name != riassd.github.io), so assets are served from
-// https://riassd.github.io/riases.dev/. If you ever rename this repo to
-// riassd.github.io, change base back to '/'. This MUST match the current
-// repo name exactly, or assets 404 and the page renders blank.
+// Served from the custom domain rlases.dev (configured via the `CNAME`
+// file in public/), so the site lives at the domain root — base must
+// stay '/'. If the custom domain is ever removed, switch back to
+// '/<repo-name>/' to match GitHub Pages' default project-site subpath.
 export default defineConfig({
-  base: '/riases.dev/',
+  base: '/',
   plugins: [
     react(),
     VitePWA({

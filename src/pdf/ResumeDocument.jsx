@@ -181,8 +181,7 @@ export default function ResumeDocument() {
         </View>
 
         <Text style={styles.footer}>
-          Generado desde {profile.links.github.replace('https://github.com/', 'github.com/')} —
-          riassd.github.io/riases.dev
+          Generado desde {profile.links.github.replace('https://github.com/', 'github.com/')} — rlases.dev
         </Text>
       </Page>
     </Document>
