@@ -1143,29 +1143,163 @@ main {
   border-color: var(--accent);
 }
 
-.contact-links {
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-  margin-top: 32px;
-}
-
 .section-contact {
   position: relative;
-  overflow: hidden;
 }
 
-.particle-network {
+.contact-status {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 20px;
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.contact-status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #4ade80;
+  box-shadow: 0 0 0 rgba(74, 222, 128, 0.6);
+  animation: contact-status-pulse 2s ease-out infinite;
+}
+
+@keyframes contact-status-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.5);
+  }
+  70% {
+    box-shadow: 0 0 0 7px rgba(74, 222, 128, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(74, 222, 128, 0);
+  }
+}
+
+.contact-status-sep {
+  color: var(--border);
+}
+
+.contact-email-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.contact-email-row .contact-link {
+  margin-bottom: 0;
+}
+
+.contact-copy-btn {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  margin-top: 4px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--bg-subtle);
+  color: var(--muted);
+  font-size: 16px;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.contact-copy-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.contact-tiles {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 10px;
+  margin-top: 32px;
+  max-width: 420px;
+}
+
+.contact-tile {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 84px;
+  padding: 14px 10px;
+  border-radius: 14px;
+  background: var(--bg-subtle);
+  border: 1px solid var(--border);
+  color: var(--fg);
+  text-decoration: none;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: inherit;
+  overflow: hidden;
+  transition: transform 0.25s ease, border-color 0.25s, box-shadow 0.25s;
+}
+
+.contact-tile::before {
+  content: '';
   position: absolute;
   inset: 0;
   z-index: 0;
+  background: radial-gradient(
+    120px circle at var(--spot-x, 50%) var(--spot-y, 50%),
+    color-mix(in srgb, var(--fg) 18%, transparent),
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
   pointer-events: none;
 }
 
-.particle-network canvas {
-  width: 100%;
-  height: 100%;
-  display: block;
+.contact-tile:hover {
+  transform: translateY(-3px);
+  border-color: var(--accent);
+  box-shadow: 0 0 20px rgba(255, 210, 31, 0.2);
+}
+
+.contact-tile:hover::before {
+  opacity: 1;
+}
+
+.contact-tile-icon,
+.contact-tile-label {
+  position: relative;
+  z-index: 1;
+}
+
+.contact-tile-icon {
+  font-size: 22px;
+  color: var(--muted);
+  transition: color 0.25s;
+}
+
+.contact-tile:hover .contact-tile-icon {
+  color: var(--accent);
+}
+
+.contact-tile-label {
+  font-size: 12px;
+  color: var(--muted);
+  transition: color 0.25s;
+}
+
+.contact-tile:hover .contact-tile-label {
+  color: var(--fg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .contact-status-dot {
+    animation: none;
+  }
 }
 
 .contact-grid {
@@ -1292,8 +1426,7 @@ main {
   }
 
   .hero-actions,
-  .proj-row-actions,
-  .contact-links {
+  .proj-row-actions {
     flex-direction: column;
     align-items: stretch;
   }
