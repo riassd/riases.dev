@@ -2,8 +2,10 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { QRCodeSVG } from 'qrcode.react'
 import { FaLinkedin } from 'react-icons/fa6'
-import { profile } from '../data/profile.js'
+import { profile, certifications } from '../data/profile.js'
 import { downloadVCard } from '../hooks/useVCard.js'
+import { useTilt } from '../hooks/useTilt.js'
+import { useSpotlight } from '../hooks/useSpotlight.js'
 
 const INITIALS = profile.name
   .split(' ')
@@ -13,10 +15,23 @@ const INITIALS = profile.name
 
 export default function ContactCard() {
   const [flipped, setFlipped] = useState(false)
+  const tilt = useTilt()
+  const spotlight = useSpotlight()
+
+  const handleMouseMove = (e) => {
+    tilt.onMouseMove(e)
+    spotlight.onMouseMove(e)
+  }
 
   return (
-    <div className="contact-card-scene">
+    <motion.div
+      className="contact-card-scene"
+      style={tilt.style}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={tilt.onMouseLeave}
+    >
       <motion.div
+        ref={spotlight.ref}
         className="contact-card"
         animate={{ rotateY: flipped ? 180 : 0 }}
         transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
@@ -28,6 +43,10 @@ export default function ContactCard() {
         onKeyDown={(e) => e.key === 'Enter' && setFlipped((f) => !f)}
       >
         <div className="contact-card-face contact-card-front">
+          <div className="contact-card-stat">
+            <b>{certifications.length}</b>
+            <span>cert.</span>
+          </div>
           <div className="contact-card-top">
             <span className="contact-card-avatar">{INITIALS}</span>
             <p className="contact-card-eyebrow">riassd.</p>
@@ -39,6 +58,7 @@ export default function ContactCard() {
           <ul className="contact-card-tags">
             {profile.skillGroups.map((group) => (
               <li key={group.title} className={`contact-card-tag contact-card-tag--${group.tone}`}>
+                <span className="contact-card-tag-dot" />
                 {group.title}
               </li>
             ))}
@@ -88,6 +108,6 @@ export default function ContactCard() {
           </div>
         </div>
       </motion.div>
-    </div>
+    </motion.div>
   )
 }
