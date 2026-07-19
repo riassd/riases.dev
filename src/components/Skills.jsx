@@ -1,6 +1,63 @@
 import { motion } from 'framer-motion'
+import {
+  SiDocker,
+  SiElectron,
+  SiFastapi,
+  SiJavascript,
+  SiOpenjdk,
+  SiPython,
+  SiReact,
+  SiSupabase,
+} from 'react-icons/si'
+import {
+  TbAlertTriangle,
+  TbBrandPowershell,
+  TbBug,
+  TbClipboardList,
+  TbDeviceDesktop,
+  TbKey,
+  TbRadar2,
+  TbUserShield,
+} from 'react-icons/tb'
 import { profile } from '../data/profile.js'
+import { useSpotlight } from '../hooks/useSpotlight.js'
 import { fadeUpItem, staggerContainer, viewport } from '../motion.js'
+
+const SKILL_ICONS = {
+  'Gestión de Riesgos TI': TbAlertTriangle,
+  'RBAC / Control de Acceso': TbUserShield,
+  'Auditoría y Logging': TbClipboardList,
+  'OWASP: XSS y tokens de un solo uso': TbBug,
+  'Gestión de Secretos (.env)': TbKey,
+  'Monitoreo de Incidentes': TbRadar2,
+  'JavaScript / Node.js': SiJavascript,
+  Python: SiPython,
+  Java: SiOpenjdk,
+  Electron: SiElectron,
+  FastAPI: SiFastapi,
+  React: SiReact,
+  PowerShell: TbBrandPowershell,
+  Docker: SiDocker,
+  'Supabase / PostgreSQL': SiSupabase,
+  'Soporte Técnico (HW/SW/Redes)': TbDeviceDesktop,
+}
+
+function SkillTile({ skill, tone }) {
+  const spotlight = useSpotlight()
+  const Icon = SKILL_ICONS[skill]
+
+  return (
+    <motion.li
+      ref={spotlight.ref}
+      onMouseMove={spotlight.onMouseMove}
+      variants={fadeUpItem}
+      className={`skill-tile skill-tile--${tone}`}
+    >
+      {Icon && <Icon className="skill-tile-icon" aria-hidden="true" />}
+      <span className="skill-tile-label">{skill}</span>
+    </motion.li>
+  )
+}
 
 export default function Skills() {
   return (
@@ -19,13 +76,11 @@ export default function Skills() {
         {profile.skillGroups.map((group) => (
           <motion.div key={group.title} variants={fadeUpItem} className="skill-group">
             <h3 className={`skill-group-title skill-group-title--${group.tone}`}>{group.title}</h3>
-            <ul className="skills-list">
+            <motion.ul variants={staggerContainer(0.04)} className="skills-list">
               {group.skills.map((skill) => (
-                <li key={skill} className={`skill-pill skill-pill--${group.tone}`}>
-                  {skill}
-                </li>
+                <SkillTile key={skill} skill={skill} tone={group.tone} />
               ))}
-            </ul>
+            </motion.ul>
           </motion.div>
         ))}
       </motion.div>

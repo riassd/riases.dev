@@ -1018,36 +1018,104 @@ main {
 }
 
 .skills-list {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(104px, 1fr));
   gap: 10px;
 }
 
-.skill-pill {
-  padding: 9px 16px;
-  border-radius: 999px;
+.skill-tile {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 92px;
+  padding: 14px 8px;
+  border-radius: 14px;
   background: var(--bg-subtle);
-  color: var(--fg);
   border: 1px solid var(--border);
-  font-size: 13px;
-  transition: border-color 0.25s, box-shadow 0.25s, transform 0.2s;
+  text-align: center;
+  overflow: hidden;
+  transition: transform 0.25s ease, border-color 0.25s, box-shadow 0.25s;
 }
 
-.skill-pill:hover {
-  transform: translateY(-2px);
+.skill-tile::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: radial-gradient(
+    120px circle at var(--spot-x, 50%) var(--spot-y, 50%),
+    color-mix(in srgb, var(--fg) 18%, transparent),
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
 }
 
-.skill-pill--pink:hover {
-  border-color: #f472b6;
-  box-shadow: 0 0 16px rgba(244, 114, 182, 0.35);
+.skill-tile::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: linear-gradient(115deg, transparent 42%, rgba(255, 255, 255, 0.09) 50%, transparent 58%);
+  background-size: 220% 220%;
+  background-position: -120% -120%;
+  transition: background-position 0.7s ease;
+  pointer-events: none;
 }
-.skill-pill--blue:hover {
-  border-color: #38bdf8;
-  box-shadow: 0 0 16px rgba(56, 189, 248, 0.35);
+
+.skill-tile:hover {
+  transform: translateY(-3px);
 }
-.skill-pill--green:hover {
-  border-color: #4ade80;
-  box-shadow: 0 0 16px rgba(74, 222, 128, 0.35);
+
+.skill-tile:hover::before {
+  opacity: 1;
+}
+
+.skill-tile:hover::after {
+  background-position: 120% 120%;
+}
+
+.skill-tile-icon,
+.skill-tile-label {
+  position: relative;
+  z-index: 1;
+}
+
+.skill-tile-icon {
+  font-size: 24px;
+  color: var(--muted);
+  transition: color 0.25s;
+}
+
+.skill-tile-label {
+  font-size: 11px;
+  line-height: 1.3;
+  color: var(--muted);
+  transition: color 0.25s;
+}
+
+.skill-tile:hover .skill-tile-label {
+  color: var(--fg);
+}
+
+.skill-tile--pink:hover { border-color: #f472b6; box-shadow: 0 0 20px rgba(244, 114, 182, 0.3); }
+.skill-tile--pink:hover .skill-tile-icon { color: #f472b6; }
+
+.skill-tile--blue:hover { border-color: #38bdf8; box-shadow: 0 0 20px rgba(56, 189, 248, 0.3); }
+.skill-tile--blue:hover .skill-tile-icon { color: #38bdf8; }
+
+.skill-tile--green:hover { border-color: #4ade80; box-shadow: 0 0 20px rgba(74, 222, 128, 0.3); }
+.skill-tile--green:hover .skill-tile-icon { color: #4ade80; }
+
+@media (prefers-reduced-motion: reduce) {
+  .skill-tile,
+  .skill-tile::after {
+    transition: none;
+  }
 }
 
 .contact-text {
