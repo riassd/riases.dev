@@ -1,13 +1,24 @@
 import { motion } from 'framer-motion'
+import { TbAlertTriangle, TbBraces, TbHeadset, TbRobot, TbShieldLock, TbTerminal2 } from 'react-icons/tb'
 import { highlights } from '../data/highlights.js'
 import { useSpotlight } from '../hooks/useSpotlight.js'
 import { useTilt } from '../hooks/useTilt.js'
 import { useScrambleText } from '../hooks/useScrambleText.js'
 import { fadeUpItem, scaleIn, staggerContainer, viewport } from '../motion.js'
 
+const ICONS = {
+  'Automatización & Scripting': TbRobot,
+  'Gestión de Riesgos': TbAlertTriangle,
+  Ciberseguridad: TbShieldLock,
+  'Soporte TI': TbHeadset,
+  'Node.js · Electron · PowerShell': TbTerminal2,
+  'Python · Java': TbBraces,
+}
+
 function BentoItem({ item }) {
   const spotlight = useSpotlight()
   const tilt = useTilt()
+  const Icon = ICONS[item.label]
 
   return (
     <motion.div
@@ -21,6 +32,7 @@ function BentoItem({ item }) {
       onMouseLeave={tilt.onMouseLeave}
       className={`bento-item bento-item--${item.tone} ${item.span ? `bento-item--${item.span}` : ''}`}
     >
+      {Icon && <Icon className="bento-icon" aria-hidden="true" />}
       <span className="bento-label">{item.label}</span>
     </motion.div>
   )
