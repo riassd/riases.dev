@@ -1,8 +1,15 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { QRCodeSVG } from 'qrcode.react'
+import { FaLinkedin } from 'react-icons/fa6'
 import { profile } from '../data/profile.js'
 import { downloadVCard } from '../hooks/useVCard.js'
+
+const INITIALS = profile.name
+  .split(' ')
+  .slice(0, 2)
+  .map((word) => word[0])
+  .join('')
 
 export default function ContactCard() {
   const [flipped, setFlipped] = useState(false)
@@ -21,36 +28,64 @@ export default function ContactCard() {
         onKeyDown={(e) => e.key === 'Enter' && setFlipped((f) => !f)}
       >
         <div className="contact-card-face contact-card-front">
-          <div>
+          <div className="contact-card-top">
+            <span className="contact-card-avatar">{INITIALS}</span>
             <p className="contact-card-eyebrow">riassd.</p>
+          </div>
+          <div>
             <h3 className="contact-card-name">{profile.name}</h3>
             <p className="contact-card-role">{profile.role}</p>
-            <p className="contact-card-location">{profile.location}</p>
           </div>
-          <span className="contact-card-hint">toca para voltear ↻</span>
+          <ul className="contact-card-tags">
+            {profile.skillGroups.map((group) => (
+              <li key={group.title} className={`contact-card-tag contact-card-tag--${group.tone}`}>
+                {group.title}
+              </li>
+            ))}
+          </ul>
+          <div className="contact-card-footer">
+            <p className="contact-card-location">{profile.location}</p>
+            <span className="contact-card-hint">toca para voltear ↻</span>
+          </div>
         </div>
 
         <div className="contact-card-face contact-card-back">
+          <div className="contact-card-back-header">
+            <FaLinkedin className="contact-card-linkedin-icon" aria-hidden="true" />
+            <span>Conecta en LinkedIn</span>
+          </div>
           <div className="contact-card-qr">
             <QRCodeSVG
               value={profile.links.linkedin}
-              size={112}
+              size={92}
               bgColor="transparent"
               fgColor="#f4f2ec"
               level="M"
             />
           </div>
-          <p className="contact-card-qr-label">Escanea para ir a mi LinkedIn</p>
-          <button
-            type="button"
-            className="button button-primary contact-card-save"
-            onClick={(e) => {
-              e.stopPropagation()
-              downloadVCard()
-            }}
-          >
-            Guardar contacto (.vcf)
-          </button>
+          <p className="contact-card-qr-label">Escanea o toca "Ver perfil"</p>
+          <div className="contact-card-back-actions">
+            <a
+              className="button button-ghost contact-card-linkedin-btn"
+              href={profile.links.linkedin}
+              target="_blank"
+              rel="noreferrer"
+              onClick={(e) => e.stopPropagation()}
+              data-cursor="hover"
+            >
+              Ver perfil
+            </a>
+            <button
+              type="button"
+              className="button button-primary contact-card-save"
+              onClick={(e) => {
+                e.stopPropagation()
+                downloadVCard()
+              }}
+            >
+              Guardar (.vcf)
+            </button>
+          </div>
         </div>
       </motion.div>
     </div>
