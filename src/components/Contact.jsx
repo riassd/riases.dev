@@ -1,46 +1,92 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
+import { toast } from 'sonner'
+import { FaGithub, FaLinkedin } from 'react-icons/fa6'
+import { BsFileEarmarkPdfFill } from 'react-icons/bs'
+import { TbCopy } from 'react-icons/tb'
 import Balancer from 'react-wrap-balancer'
 import { profile } from '../data/profile.js'
 import { fadeUpItem, staggerContainer, viewport } from '../motion.js'
-import MagneticButton from './MagneticButton.jsx'
-import ContactCard from './ContactCard.jsx'
-import ParticleNetwork from './ParticleNetwork.jsx'
+import { useSpotlight } from '../hooks/useSpotlight.js'
 import { useMagnetic } from '../hooks/useMagnetic.js'
 import { downloadResumePdf } from '../hooks/useResumePdf.js'
+import ContactCard from './ContactCard.jsx'
 
-function ResumeButton() {
+const TIME_ZONE = 'America/Bogota'
+
+function useLocalTime() {
+  const format = () =>
+    new Intl.DateTimeFormat('es-CO', { hour: '2-digit', minute: '2-digit', timeZone: TIME_ZONE }).format(new Date())
+
+  const [time, setTime] = useState(format)
+
+  useEffect(() => {
+    const id = setInterval(() => setTime(format()), 30_000)
+    return () => clearInterval(id)
+  }, [])
+
+  return time
+}
+
+function ContactTile({ icon: Icon, label, onClick, href, ...rest }) {
+  const spotlight = useSpotlight()
   const magnetic = useMagnetic()
-  const [status, setStatus] = useState('idle')
+  const Tag = href ? 'a' : 'button'
 
-  const handleClick = async () => {
-    if (status === 'loading') return
-    setStatus('loading')
+  const setRef = (el) => {
+    spotlight.ref.current = el
+    magnetic.ref.current = el
+  }
+
+  return (
+    <Tag
+      ref={setRef}
+      href={href}
+      type={href ? undefined : 'button'}
+      onClick={onClick}
+      onMouseMove={(e) => {
+        spotlight.onMouseMove(e)
+        magnetic.onMouseMove(e)
+      }}
+      onMouseLeave={magnetic.onMouseLeave}
+      className="contact-tile"
+      data-cursor="hover"
+      {...rest}
+    >
+      <Icon className="contact-tile-icon" aria-hidden="true" />
+      <span className="contact-tile-label">{label}</span>
+    </Tag>
+  )
+}
+
+function CopyEmailButton() {
+  const handleCopy = async () => {
     try {
-      await downloadResumePdf()
-      setStatus('idle')
+      await navigator.clipboard.writeText(profile.links.email)
+      toast('📋 Email copiado', { description: profile.links.email })
     } catch {
-      setStatus('error')
+      toast.error('No se pudo copiar el email')
     }
   }
 
   return (
-    <button
-      ref={magnetic.ref}
-      type="button"
-      className="magnetic button button-primary"
-      onMouseMove={magnetic.onMouseMove}
-      onMouseLeave={magnetic.onMouseLeave}
-      onClick={handleClick}
-      data-cursor="hover"
-      disabled={status === 'loading'}
-    >
-      {status === 'loading' ? 'Generando CV…' : status === 'error' ? 'Reintentar descarga' : 'Descargar CV (PDF)'}
+    <button type="button" className="contact-copy-btn" onClick={handleCopy} data-cursor="hover" aria-label="Copiar email">
+      <TbCopy aria-hidden="true" />
     </button>
   )
 }
 
 export default function Contact() {
+  const time = useLocalTime()
+
+  const handleDownloadCv = async () => {
+    try {
+      await downloadResumePdf()
+    } catch {
+      toast.error('No se pudo generar el CV')
+    }
+  }
+
   return (
     <motion.section
       id="contacto"
@@ -50,7 +96,6 @@ export default function Contact() {
       viewport={viewport}
       variants={staggerContainer(0.1)}
     >
-      <ParticleNetwork />
       <div className="contact-grid">
         <div>
           <motion.h2 variants={fadeUpItem} className="section-title glitch" data-text="Contacto">
@@ -62,32 +107,37 @@ export default function Contact() {
               ciberseguridad? Escríbeme.
             </Balancer>
           </motion.p>
-          <motion.a
-            variants={fadeUpItem}
-            className="contact-link"
-            href={`mailto:${profile.links.email}`}
-            data-cursor="hover"
-          >
-            {profile.links.email}
-          </motion.a>
-          <motion.div variants={fadeUpItem} className="contact-links">
-            <MagneticButton
-              className="button button-ghost"
+
+          <motion.div variants={fadeUpItem} className="contact-status">
+            <span className="contact-status-dot" aria-hidden="true" />
+            Disponible para nuevas oportunidades
+            <span className="contact-status-sep">·</span>
+            {time} en {profile.location.split(',')[0]}
+          </motion.div>
+
+          <motion.div variants={fadeUpItem} className="contact-email-row">
+            <a className="contact-link" href={`mailto:${profile.links.email}`} data-cursor="hover">
+              {profile.links.email}
+            </a>
+            <CopyEmailButton />
+          </motion.div>
+
+          <motion.div variants={staggerContainer(0.06)} className="contact-tiles">
+            <ContactTile
+              icon={FaGithub}
+              label="GitHub"
               href={profile.links.github}
               target="_blank"
               rel="noreferrer"
-            >
-              GitHub
-            </MagneticButton>
-            <MagneticButton
-              className="button button-ghost"
+            />
+            <ContactTile
+              icon={FaLinkedin}
+              label="LinkedIn"
               href={profile.links.linkedin}
               target="_blank"
               rel="noreferrer"
-            >
-              LinkedIn
-            </MagneticButton>
-            <ResumeButton />
+            />
+            <ContactTile icon={BsFileEarmarkPdfFill} label="Descargar CV" onClick={handleDownloadCv} />
           </motion.div>
         </div>
         <motion.div variants={fadeUpItem}>
