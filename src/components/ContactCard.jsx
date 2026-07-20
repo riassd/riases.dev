@@ -1,11 +1,11 @@
-import { useState } from 'react'
-import { motion } from 'framer-motion'
-import { QRCodeSVG } from 'qrcode.react'
-import { FaLinkedin } from 'react-icons/fa6'
+import { useEffect, useState } from 'react'
+import { AnimatePresence, motion } from 'framer-motion'
+import { TbTerminal2 } from 'react-icons/tb'
 import { profile, certifications } from '../data/profile.js'
 import { downloadVCard } from '../hooks/useVCard.js'
 import { useTilt } from '../hooks/useTilt.js'
 import { useSpotlight } from '../hooks/useSpotlight.js'
+import { unlockAchievement } from '../hooks/useAchievements.js'
 
 const INITIALS = profile.name
   .split(' ')
@@ -13,10 +13,31 @@ const INITIALS = profile.name
   .map((word) => word[0])
   .join('')
 
+const TERMINAL_LINES = [
+  { prompt: 'whoami', output: profile.handle },
+  { prompt: 'cat rol.txt', output: profile.role },
+  { prompt: 'locate --user', output: profile.location },
+  { prompt: 'status --check', output: '🟢 Disponible' },
+]
+
+const terminalContainer = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.15, delayChildren: 0.1 } },
+}
+
+const terminalLine = {
+  hidden: { opacity: 0, x: -6 },
+  visible: { opacity: 1, x: 0 },
+}
+
 export default function ContactCard() {
   const [flipped, setFlipped] = useState(false)
   const tilt = useTilt()
   const spotlight = useSpotlight()
+
+  useEffect(() => {
+    if (flipped) unlockAchievement('card-flip')
+  }, [flipped])
 
   const handleMouseMove = (e) => {
     tilt.onMouseMove(e)
@@ -71,19 +92,28 @@ export default function ContactCard() {
 
         <div className="contact-card-face contact-card-back">
           <div className="contact-card-back-header">
-            <FaLinkedin className="contact-card-linkedin-icon" aria-hidden="true" />
-            <span>Conecta en LinkedIn</span>
+            <TbTerminal2 className="contact-card-terminal-icon" aria-hidden="true" />
+            <span>Acceso concedido</span>
           </div>
-          <div className="contact-card-qr">
-            <QRCodeSVG
-              value={profile.links.linkedin}
-              size={92}
-              bgColor="transparent"
-              fgColor="#f4f2ec"
-              level="M"
-            />
-          </div>
-          <p className="contact-card-qr-label">Escanea o toca "Ver perfil"</p>
+          <AnimatePresence>
+            {flipped && (
+              <motion.div
+                className="contact-card-terminal"
+                variants={terminalContainer}
+                initial="hidden"
+                animate="visible"
+                exit="hidden"
+              >
+                {TERMINAL_LINES.map((line) => (
+                  <motion.p key={line.prompt} variants={terminalLine} className="contact-card-terminal-line">
+                    <span className="contact-card-terminal-prompt">$ {line.prompt}</span>
+                    <span className="contact-card-terminal-output">{line.output}</span>
+                  </motion.p>
+                ))}
+                <span className="contact-card-terminal-cursor" aria-hidden="true" />
+              </motion.div>
+            )}
+          </AnimatePresence>
           <div className="contact-card-back-actions">
             <a
               className="button button-ghost contact-card-linkedin-btn"

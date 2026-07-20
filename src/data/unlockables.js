@@ -41,4 +41,10 @@ export const unlockableAchievements = [
     label: 'Coleccionista de apps',
     desc: 'Instalaste el sitio como app.',
   },
+  {
+    id: 'card-flip',
+    icon: '🎴',
+    label: 'Carta volteada',
+    desc: 'Encontraste la terminal secreta detrás de la tarjeta.',
+  },
 ]

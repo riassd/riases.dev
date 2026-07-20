@@ -1195,6 +1195,13 @@ main {
   position: relative;
 }
 
+.section-contact .section-title {
+  font-size: clamp(44px, 7vw, 72px);
+  font-weight: 800;
+  letter-spacing: -2.5px;
+  margin-bottom: 24px;
+}
+
 .contact-status {
   display: flex;
   align-items: center;
@@ -1372,7 +1379,7 @@ main {
 .contact-card {
   position: relative;
   width: 340px;
-  height: 300px;
+  height: 350px;
   transform-style: preserve-3d;
   cursor: pointer;
 }
@@ -1574,23 +1581,50 @@ main {
   margin-bottom: 4px;
 }
 
-.contact-card-linkedin-icon {
-  font-size: 20px;
-  color: #0a66c2;
+.contact-card-terminal-icon {
+  font-size: 17px;
+  color: var(--fg);
 }
 
-.contact-card-qr {
-  padding: 10px;
-  border-radius: 12px;
-  background: var(--bg);
+.contact-card-terminal {
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--bg) 60%, transparent);
   border: 1px solid var(--border);
+  text-align: left;
+  font-family: var(--mono);
 }
 
-.contact-card-qr-label {
-  font-size: 11.5px;
+.contact-card-terminal-line {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  margin-bottom: 6px;
+}
+
+.contact-card-terminal-line:last-of-type {
+  margin-bottom: 0;
+}
+
+.contact-card-terminal-prompt {
+  font-size: 10.5px;
   color: var(--muted);
-  margin-top: 8px;
-  margin-bottom: 4px;
+}
+
+.contact-card-terminal-output {
+  font-size: 12px;
+  color: var(--fg);
+  line-height: 1.35;
+}
+
+.contact-card-terminal-cursor {
+  display: inline-block;
+  width: 6px;
+  height: 12px;
+  margin-top: 4px;
+  background: var(--fg);
+  animation: blink 1s step-end infinite;
 }
 
 .contact-card-back-actions {
