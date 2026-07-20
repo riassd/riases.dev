@@ -1506,28 +1506,30 @@ main {
 .contact-card-tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 7px;
+  gap: 6px;
 }
 
 .contact-card-tag {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 5px;
   font-family: var(--mono);
-  font-size: 11px;
+  font-size: 9.5px;
   font-weight: 500;
-  padding: 5px 11px;
+  line-height: 1;
+  padding: 4px 8px;
   border-radius: 999px;
   border: 1px solid transparent;
-  background: color-mix(in srgb, currentColor 12%, transparent);
+  background: color-mix(in srgb, currentColor 10%, transparent);
   color: var(--muted);
 }
 
 .contact-card-tag-dot {
-  width: 6px;
-  height: 6px;
+  width: 4px;
+  height: 4px;
   border-radius: 50%;
   background: currentColor;
+  flex: none;
 }
 
 .contact-card-tag--pink { color: #f472b6; }
